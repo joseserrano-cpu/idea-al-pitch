@@ -1,0 +1,763 @@
+<title>De la Idea al Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Public+Sans:wght@300;400;500;700&display=swap">
+
+<!-- ESTADO DEL REGISTRO — única fuente. Para actualizar: cambiar "inscritos" y republicar.
+     Regla: lugares visibles = mín(visibles, total − inscritos). Con 30 de cupo real y 20 visibles,
+     los primeros 10 inscritos no mueven el número; a partir del 11 baja de verdad. -->
+<script id="estado" type="application/json">{"total":30,"visibles":20,"inscritos":0,"cierre":"2026-09-30","arranque":"2026-10-01"}</script>
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   Sistema visual — Brandbook SUM 2023_v02
+   Colores principales · ANARANJADO #FF844D · ROJO #FF4D62
+   Familia "Programas" · AMARILLO #FFCC66 + ANARANJADO #FF844D
+   Soporte · ÓNIX #454545 · PLATEADO #BCBCBC · GRIS #808080
+   Tipografía principal Public Sans · secundaria Montserrat
+   Logotipo en versión NEGATIVO — una de las dos únicas variantes
+   autorizadas, aplicada sobre fondo oscuro como indica el manual.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --naranja:#FF844D;
+  --rojo:#FF4D62;
+  --amarillo:#FFCC66;
+  --onix:#454545;
+  --plateado:#BCBCBC;
+  --gris:#808080;
+
+  --fondo:#151517;
+  --sup:#1E1E21;
+  --sup-2:#26262A;
+  --borde:rgba(255,255,255,.11);
+  --borde-2:rgba(255,255,255,.20);
+  --blanco:#FFFFFF;
+
+  --display:"Montserrat",system-ui,sans-serif;
+  --texto:"Public Sans",system-ui,-apple-system,sans-serif;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--fondo); color:var(--blanco);
+  font-family:var(--texto); font-weight:300; font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+h1,h2,h3{font-family:var(--display);font-weight:800;text-wrap:balance;margin:0;letter-spacing:-.02em;line-height:1.05}
+p{margin:0}
+a{color:inherit}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+
+/* ── barra ─────────────────────────────────────────── */
+.barra{
+  position:sticky;top:0;z-index:60;
+  background:rgba(21,21,23,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--borde);
+}
+.barra .wrap{display:flex;align-items:center;gap:18px;height:72px}
+/* Logotipo_SUM_Blanco_02.png del kit oficial — versión NEGATIVO, la autorizada
+   para fondo oscuro. 36px de alto, por encima del mínimo de 30px del manual. */
+.logo-sum{height:36px;width:auto;display:block}
+.alianza{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--texto);font-size:12.5px;font-weight:500;color:var(--plateado);
+}
+.alianza .x{color:var(--gris);font-size:15px}
+.alianza .vas{color:var(--blanco);font-weight:700;letter-spacing:-.01em}
+.cta-mini{
+  margin-left:auto;background:var(--naranja);color:#151517;
+  font-family:var(--texto);font-weight:700;font-size:14.5px;
+  padding:11px 20px;border-radius:7px;text-decoration:none;white-space:nowrap;
+  transition:transform .16s ease;
+}
+.cta-mini:hover{transform:translateY(-1px)}
+
+/* ── hero ──────────────────────────────────────────── */
+.hero{position:relative;padding:70px 0 30px;overflow:hidden}
+#malla{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.62}
+.hero .wrap{position:relative;z-index:1}
+.etiqueta{
+  display:block;max-width:60ch;line-height:1.9;
+  font-family:var(--texto);font-size:11.5px;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--amarillo);
+  margin-bottom:24px;
+}
+.etiqueta::before{content:"";display:inline-block;vertical-align:middle;width:26px;height:2px;margin-right:10px;background:var(--amarillo)}
+.etiqueta span{white-space:nowrap}
+h1{font-size:clamp(40px,6.6vw,76px);max-width:14ch}
+h1 .quema{
+  background:linear-gradient(96deg,var(--amarillo),var(--naranja) 55%,var(--rojo));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.bajada{
+  margin-top:24px;max-width:47ch;font-size:19.5px;color:var(--plateado);
+  font-weight:300;line-height:1.6;
+}
+
+/* ── calculadora ───────────────────────────────────── */
+.calc{
+  margin-top:44px;background:var(--sup);border:1px solid var(--borde);
+  border-radius:16px;overflow:hidden;
+  box-shadow:0 30px 70px -40px rgba(0,0,0,.9);
+}
+.calc-top{padding:28px 30px 24px;border-bottom:1px solid var(--borde)}
+.calc-ctrl{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.calc-ctrl .calc-lab{margin-bottom:10px;flex-direction:column;align-items:flex-start;gap:4px}
+.calc-ctrl .calc-lab strong{font-size:26px}
+.calc-ctrl .calc-lab span{font-size:14px;line-height:1.35}
+.celda.aviso .celda-val{font-size:20px;line-height:1.2;letter-spacing:-.01em;color:var(--rojo)}
+.calc-rot{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gris);margin-bottom:18px;
+}
+.calc-lab{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-bottom:14px;flex-wrap:wrap}
+.calc-lab span{font-size:15.5px;color:var(--plateado);flex:1 1 auto;min-width:0}
+.calc-lab strong{font-family:var(--display);font-weight:800;font-size:32px;letter-spacing:-.025em}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;
+  background:linear-gradient(90deg,var(--amarillo),var(--naranja)) 0/var(--pct,35%) 100% no-repeat,
+             rgba(255,255,255,.12);
+  outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--fondo);border:3px solid var(--naranja);cursor:grab;
+  box-shadow:0 0 0 5px rgba(255,132,77,.16);
+}
+input[type=range]::-moz-range-thumb{
+  width:26px;height:26px;border-radius:50%;background:var(--fondo);
+  border:3px solid var(--naranja);cursor:grab;
+}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 7px rgba(255,132,77,.36)}
+
+.rejilla{display:grid;grid-template-columns:repeat(3,1fr)}
+.celda{padding:26px 30px;border-right:1px solid var(--borde)}
+.celda:last-child{border-right:0}
+.celda-rot{font-size:13px;color:var(--plateado);margin-bottom:9px;line-height:1.4;font-weight:400}
+.celda-val{font-family:var(--display);font-weight:800;font-size:clamp(28px,3.6vw,40px);letter-spacing:-.035em;line-height:1}
+.celda.sabes .celda-val{color:var(--blanco)}
+.celda.pierde{background:rgba(255,132,77,.06)}
+.celda.pierde .celda-val{color:var(--naranja)}
+.celda.nosabes{background:rgba(255,77,98,.045)}
+.celda.nosabes .celda-val{color:var(--rojo);opacity:.62}
+.destape{
+  padding:22px 30px;background:var(--sup-2);border-top:1px solid var(--borde);
+}
+.destape p{font-size:15.5px;color:var(--plateado);max-width:62ch;font-weight:300}
+.destape b{color:var(--blanco);font-weight:700}
+
+/* ── botones ───────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--texto);font-weight:700;font-size:16.5px;
+  padding:15px 28px;border-radius:8px;text-decoration:none;border:0;cursor:pointer;
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.btn-a{background:var(--naranja);color:#151517;box-shadow:0 10px 30px -12px var(--naranja)}
+.btn-a:hover{transform:translateY(-2px);box-shadow:0 16px 40px -14px var(--naranja)}
+.btn:focus-visible{outline:3px solid var(--amarillo);outline-offset:3px}
+
+/* ── secciones ─────────────────────────────────────── */
+section{padding:80px 0}
+.rot-sec{
+  font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gris);margin-bottom:16px;
+}
+h2{font-size:clamp(30px,4.2vw,46px);max-width:19ch}
+.sub{margin-top:18px;max-width:57ch;color:var(--plateado);font-size:18px;font-weight:300}
+
+/* duelo */
+.duelo{display:grid;grid-template-columns:1fr 1fr;margin-top:40px;border:1px solid var(--borde);border-radius:14px;overflow:hidden}
+.duelo>div{padding:32px 30px}
+.duelo>div:first-child{border-right:1px solid var(--borde)}
+.duelo>div:last-child{background:var(--sup)}
+.duelo h3{font-family:var(--texto);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:20px}
+.duelo>div:first-child h3{color:var(--gris)}
+.duelo>div:last-child h3{color:var(--amarillo)}
+.duelo ul{margin:0;padding:0;list-style:none}
+.duelo li{
+  padding:11px 0;border-top:1px solid var(--borde);
+  font-size:16.5px;color:var(--plateado);font-weight:300;line-height:1.5;
+}
+.duelo li:first-child{border-top:0;padding-top:0}
+.duelo>div:last-child li{color:var(--blanco);font-weight:400}
+
+/* método + herramienta */
+.suma{margin-top:44px;display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;border:1px solid var(--borde);border-radius:14px;overflow:hidden}
+.suma>div{padding:32px 30px}
+.suma .mas{
+  display:flex;align-items:center;justify-content:center;padding:0 18px;
+  font-family:var(--display);font-weight:800;font-size:44px;color:var(--naranja);
+  background:var(--sup);border-inline:1px solid var(--borde);
+}
+.suma h3{font-family:var(--texto);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px;color:var(--amarillo)}
+.suma h4{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin:0 0 18px}
+.suma ul{margin:0;padding:0;list-style:none}
+.suma li{padding:11px 0;border-top:1px solid var(--borde);font-size:16px;color:var(--plateado);font-weight:300;line-height:1.5}
+.suma li:first-child{border-top:0;padding-top:0}
+.suma li b{color:var(--blanco);font-weight:700}
+.suma-igual{
+  margin-top:22px;padding:24px 30px;border-radius:14px;
+  background:linear-gradient(155deg,rgba(255,132,77,.16),rgba(255,77,98,.10));border:1px solid rgba(255,132,77,.35);
+  font-size:17.5px;line-height:1.55;color:var(--plateado)
+}
+.suma-igual b{color:var(--blanco);font-weight:700}
+.ia-chip{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#151517;background:var(--amarillo);padding:5px 11px;border-radius:6px;margin-bottom:16px}
+
+/* semanas */
+.semanas{margin-top:44px;border-top:1px solid var(--borde)}
+.sem{
+  display:grid;grid-template-columns:78px 1fr 1.05fr;gap:26px;align-items:baseline;
+  padding:22px 6px;border-bottom:1px solid var(--borde);
+  transition:background .2s ease,padding-left .2s ease;
+}
+.sem:hover{background:var(--sup);padding-left:14px}
+.sem-n{
+  font-family:var(--display);font-weight:800;font-size:14px;
+  color:var(--naranja);letter-spacing:.06em;
+}
+.sem-t{font-family:var(--display);font-weight:700;font-size:19.5px;letter-spacing:-.015em}
+.sem-e{font-size:15.5px;color:var(--plateado);line-height:1.5;font-weight:300}
+.sem-e span{
+  display:block;color:var(--gris);font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.14em;font-weight:700;margin-bottom:4px;
+}
+
+/* precio */
+.precio-caja{
+  margin-top:42px;display:grid;grid-template-columns:1.15fr 1fr;
+  border:1px solid var(--borde-2);border-radius:16px;overflow:hidden;
+}
+.precio-a{padding:38px 36px;background:var(--sup)}
+.precio-b{
+  padding:38px 36px;
+  background:linear-gradient(155deg,var(--naranja),var(--rojo));
+  color:#151517;
+}
+.cupo{
+  display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--amarillo);margin-bottom:20px;
+}
+.punto{width:8px;height:8px;border-radius:50%;background:var(--amarillo);animation:late 2.4s ease-in-out infinite}
+@keyframes late{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.monto{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.monto .mxn{font-family:var(--display);font-weight:800;font-size:clamp(46px,6.4vw,68px);letter-spacing:-.04em;line-height:1}
+.monto .tachado{font-family:var(--display);font-weight:600;font-size:23px;color:var(--gris);text-decoration:line-through}
+.monto-pie{margin-top:12px;color:var(--plateado);font-size:15.5px;font-weight:300}
+.incluye{list-style:none;margin:28px 0 0;padding:0}
+.incluye li{
+  display:grid;grid-template-columns:22px 1fr;gap:13px;
+  padding:12px 0;border-top:1px solid var(--borde);font-size:16px;font-weight:300;
+}
+.incluye li:first-child{border-top:0}
+.tick{color:var(--amarillo);font-weight:700;line-height:1.5}
+.precio-b h3{font-family:var(--display);font-size:22px;font-weight:800;margin-bottom:16px}
+.precio-b p{font-size:15.5px;margin-bottom:22px;font-weight:400;color:rgba(21,21,23,.82)}
+.precio-b .btn{background:#151517;color:var(--blanco);width:100%;justify-content:center;box-shadow:0 10px 28px -12px rgba(0,0,0,.7)}
+.precio-b .btn:hover{transform:translateY(-2px)}
+.legal{margin-top:18px;font-size:12.5px;line-height:1.55;color:rgba(21,21,23,.66)}
+/* cupo y cierre */
+.cupo-num{color:var(--blanco)}
+.barra-cupo{margin-top:16px;height:6px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
+.barra-cupo i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--amarillo),var(--naranja));transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.cupo-pie{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--gris)}
+.cupo-pie b{color:var(--plateado);font-weight:500}
+.cierra{
+  margin-top:22px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;
+  padding:16px 18px;border:1px solid var(--borde-2);border-radius:12px;background:var(--fondo);
+}
+.cierra-n{font-family:var(--display);font-weight:800;font-size:40px;letter-spacing:-.04em;line-height:1;color:var(--amarillo);min-width:2ch;text-align:center}
+.cierra-t{font-size:14.5px;color:var(--plateado);line-height:1.45}
+.cierra-t b{color:var(--blanco);font-weight:700;display:block;font-size:15.5px}
+.cierra.cerrado .cierra-n{color:var(--gris)}
+
+/* honestidad */
+.honesto{background:var(--sup);border:1px solid var(--borde);border-radius:14px;padding:34px 32px;margin-top:38px}
+.honesto h3{font-family:var(--texto);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rojo);margin-bottom:22px}
+.honesto ul{margin:0;padding:0;list-style:none}
+.honesto li{
+  padding:13px 0;border-top:1px solid var(--borde);
+  font-size:16.5px;color:var(--plateado);font-weight:300;line-height:1.55;
+}
+.honesto li:first-child{border-top:0;padding-top:0}
+.honesto b{color:var(--blanco);font-weight:700}
+
+/* cierre */
+.cierre{
+  text-align:center;padding:88px 0;
+  border-top:1px solid var(--borde);
+  background:radial-gradient(120% 150% at 50% 0%, rgba(255,132,77,.13), transparent 62%);
+}
+.cierre h2{margin:0 auto;max-width:15ch}
+.cierre p{margin:20px auto 32px;max-width:47ch;color:var(--plateado);font-size:18px;font-weight:300}
+
+footer{padding:36px 0;border-top:1px solid var(--borde);font-size:12.5px;color:var(--gris)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+
+
+/* fases, corte y puerta abierta */
+.fase{margin-top:44px;margin-bottom:4px}
+.fase-rot{
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  font-family:var(--display);font-weight:700;font-size:15px;
+  letter-spacing:.02em;color:var(--plateado);
+}
+.fase-n{
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:#151517;background:var(--amarillo);padding:4px 10px;border-radius:5px;
+}
+.fase-desc{margin-top:10px;color:var(--gris);font-size:15.5px;font-weight:300;max-width:58ch}
+.corte{
+  margin:30px 0 4px;padding:26px 28px;
+  border:1px solid rgba(255,204,102,.40);border-radius:14px;
+  background:rgba(255,204,102,.06);
+}
+.corte-rot{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amarillo);margin-bottom:12px;
+}
+.corte p{font-size:16.5px;color:var(--plateado);font-weight:300;line-height:1.6;max-width:64ch}
+.corte b{color:var(--blanco);font-weight:700}
+.puerta{
+  margin-top:38px;padding:28px 30px;border:1px solid var(--borde);border-radius:14px;
+  background:var(--fondo);
+}
+.puerta-rot{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gris);margin-bottom:10px;
+}
+.puerta h3{font-family:var(--display);font-size:22px;font-weight:800;margin-bottom:10px}
+.puerta p{font-size:16px;color:var(--plateado);font-weight:300;max-width:62ch}
+.bajada b{color:var(--blanco);font-weight:700}
+.despues{
+  margin-top:22px;padding:28px 30px;border-radius:14px;
+  border:1px dashed var(--borde-2);background:transparent;
+}
+.despues-rot{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--naranja);margin-bottom:10px;
+}
+.despues h3{font-family:var(--display);font-size:21px;font-weight:800;margin-bottom:10px;color:var(--plateado)}
+.despues p{font-size:16px;color:var(--gris);font-weight:300;max-width:64ch}
+.despues b{color:var(--plateado);font-weight:700}
+
+@media (max-width:860px){
+  .rejilla{grid-template-columns:1fr}
+  .celda{border-right:0;border-bottom:1px solid var(--borde)}
+  .celda:last-child{border-bottom:0}
+  .duelo{grid-template-columns:1fr}
+  .duelo>div:first-child{border-right:0;border-bottom:1px solid var(--borde)}
+  .suma{grid-template-columns:1fr}
+  .suma .mas{padding:10px 0;border-inline:0;border-block:1px solid var(--borde);font-size:32px}
+  .precio-caja{grid-template-columns:1fr}
+  .sem{grid-template-columns:56px 1fr;gap:16px}
+  .sem-e{grid-column:2}
+  section{padding:60px 0}
+  .alianza .vas{display:none}
+  .calc-lab{flex-direction:column;align-items:flex-start;gap:6px}
+  .calc-lab strong{font-size:34px}
+  .calc-ctrl{grid-template-columns:1fr;gap:22px}
+  .calc-ctrl .calc-lab strong{font-size:28px}
+  .logo-sum{height:30px}
+  .fase-rot{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+
+<header class="barra">
+  <div class="wrap">
+    <div class="alianza">
+      <img class="logo-sum" alt="Startup México" src="data:image/png;base64,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">
+      <span class="x">×</span>
+      <span class="vas">VentureAI Studio</span>
+    </div>
+    <a class="cta-mini" href="#inscribir" data-cupo="cta">Apartar mi lugar</a>
+  </div>
+</header>
+
+<div class="hero">
+  <canvas id="malla" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="etiqueta">8 semanas · arranca el <span data-cupo="arranque">1 de octubre</span> · <span data-cupo="etiqueta">Cupo 30</span></div>
+    <h1>Todos te dicen que tu idea <span class="quema">está buenísima.</span></h1>
+    <p class="bajada">
+      Ninguno te la va a comprar. Ocho semanas para averiguar si tu negocio se sostiene
+      <b>antes</b> de meterle tus ahorros — y para construirlo si sí.
+    </p>
+
+    <div class="calc">
+      <div class="calc-top">
+        <div class="calc-rot">Haz la cuenta con tus números · mueve las barras</div>
+        <div class="calc-ctrl">
+          <div>
+            <div class="calc-lab">
+              <span>Lo que piensas invertir para arrancar</span>
+              <strong class="num" id="v-inv">$150,000</strong>
+            </div>
+            <input type="range" id="inv" min="10000" max="800000" step="10000" value="150000"
+                   aria-label="Cuánto piensas invertir para arrancar tu negocio">
+          </div>
+          <div>
+            <div class="calc-lab">
+              <span>A cuánto venderías cada uno</span>
+              <strong class="num" id="v-precio">$500</strong>
+            </div>
+            <input type="range" id="precio" min="50" max="20000" step="50" value="500"
+                   aria-label="A qué precio venderías cada unidad">
+          </div>
+          <div>
+            <div class="calc-lab">
+              <span>Cuánto te cuesta producir cada uno</span>
+              <strong class="num" id="v-costo">$200</strong>
+            </div>
+            <input type="range" id="costo" min="0" max="20000" step="50" value="200"
+                   aria-label="Cuánto te cuesta producir cada unidad">
+          </div>
+        </div>
+      </div>
+
+      <div class="rejilla">
+        <div class="celda sabes">
+          <div class="celda-rot">Lo que te deja cada venta</div>
+          <div class="celda-val num" id="r-margen">$300</div>
+        </div>
+        <div class="celda pierde" id="c-ventas">
+          <div class="celda-rot">Ventas para recuperar tu dinero</div>
+          <div class="celda-val num" id="r-ventas">500</div>
+        </div>
+        <div class="celda nosabes">
+          <div class="celda-rot">¿Cuántas de ésas tienes hoy?</div>
+          <div class="celda-val">?</div>
+        </div>
+      </div>
+
+      <div class="destape">
+        <p id="r-frase">
+          <b>¿Conoces a 500 personas que te lo compren?</b> Los dos primeros números salen de una
+          cuenta. El tercero se contesta en la semana 3, con gente real — antes de que gastes un peso.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="rot-sec">El problema</div>
+    <h2>El problema no es la idea. Es que nadie te ha dicho que no.</h2>
+    <p class="sub">
+      Tu mamá te dice que está buenísima. Tus amigos te dicen que le entran. Y ninguno
+      de los dos te va a pagar. La diferencia entre una idea y un negocio son tres
+      preguntas que nadie te ha hecho.
+    </p>
+
+    <div class="duelo">
+      <div>
+        <h3>Lo que ya tienes</h3>
+        <ul>
+          <li>La idea, y le has dado mil vueltas</li>
+          <li>Ganas de dejar de trabajarle a alguien más</li>
+          <li>Algo de dinero ahorrado para arrancar</li>
+          <li>Gente cercana diciéndote que sí</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Lo que decide si funciona</h3>
+        <ul>
+          <li>Si alguien que no te conoce pagaría por eso</li>
+          <li>Cuántos son, dónde están y qué usan hoy</li>
+          <li>Cuánto te va a costar producir cada unidad</li>
+          <li>Cuántas necesitas vender para recuperar lo invertido</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-top:1px solid var(--borde)">
+  <div class="wrap">
+    <div class="rot-sec">Método + herramienta</div>
+    <h2>No es un curso con IA. Es un método, y una plataforma que lo ejecuta contigo.</h2>
+    <p class="sub">
+      El método es de Chema Serrano y lo avala Startup México; las sesiones en vivo las da
+      el equipo de SUM. VentureAI Studio pone la plataforma: ejercicios de IA en español que producen documentos de <b style="color:var(--blanco);font-weight:700">tu</b> negocio,
+      no de un ejemplo. Una sin la otra no sirve.
+    </p>
+
+    <div class="suma">
+      <div>
+        <h3>El método</h3>
+        <h4>Ocho sesiones en vivo</h4>
+        <ul>
+          <li><b>Las da el equipo de Startup México</b>, con Chema Serrano —autor del método y COO de SUM— al frente. El método lleva el aval de SUM; la constancia también.</li>
+          <li><b>Son para decidir, no para tomar apuntes.</b> Llegas con tu documento hecho y sales con la decisión tomada.</li>
+          <li><b>Un grupo de 30 que se reta.</b> Presentas ante gente que no te conoce y no te va a decir que está buenísima.</li>
+        </ul>
+      </div>
+      <div class="mas" aria-hidden="true">+</div>
+      <div>
+        <div class="ia-chip">Plataforma con IA</div>
+        <h3>La herramienta</h3>
+        <h4>VentureAI Studio</h4>
+        <ul>
+          <li><b>79 ejercicios de IA en español.</b> Cada uno te hace preguntas sobre tu negocio y te devuelve un documento listo: tu cliente, tu precio, tu punto de equilibrio.</li>
+          <li><b>VAI, tu copiloto entre sesiones.</b> Conoce lo que ya trabajaste y responde a la hora que se te ocurra la duda.</li>
+          <li><b>Tu Venture Score.</b> Un semáforo de las cinco áreas de tu negocio que sube conforme avanzas — y tu presentación para inversionistas, editable.</li>
+          <li><b>Desde tu celular, cuando puedas.</b> Acceso completo las ocho semanas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="suma-igual">
+      <b>Sin la herramienta, ocho sesiones son ocho pláticas.</b> Sin el método, la IA te
+      escribe bonito lo que nunca validaste. <b>Juntos, sales con tu negocio en papel y sabiéndolo defender.</b>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--sup);border-block:1px solid var(--borde)">
+  <div class="wrap">
+    <div class="rot-sec">El programa</div>
+    <h2>Tres semanas para poner a prueba tu idea. Cinco para construirla.</h2>
+    <p class="sub">
+      Cada semana: una sesión de trabajo de dos horas y una hora de dudas de puerta
+      abierta. Trabajas tu propio negocio en la plataforma entre sesión y sesión; la
+      sesión es para atorones y decisiones, no para tomar apuntes.
+    </p>
+
+    <div class="fase">
+      <div class="fase-rot"><span class="fase-n">Fase 1</span> Validar · semanas 1 a 3</div>
+      <p class="fase-desc">Antes de gastar un peso. Tu idea se prueba contra gente real desde la semana 1 y se va ajustando en el camino.</p>
+    </div>
+    <div class="semanas">
+      <div class="sem"><div class="sem-n">SEM 1</div><div class="sem-t">Qué problema resuelves</div><div class="sem-e"><span>Sales con</span>Tu idea escrita en una frase que cualquiera entiende</div></div>
+      <div class="sem"><div class="sem-n">SEM 2</div><div class="sem-t">A quién le duele</div><div class="sem-e"><span>Sales con</span>Tu cliente descrito en sus palabras, no en las tuyas</div></div>
+      <div class="sem"><div class="sem-n">SEM 3</div><div class="sem-t">¿Hay mercado o hay ilusión?</div><div class="sem-e"><span>Sales con</span>Tu mercado dimensionado y tu encuesta de validación aplicada</div></div>
+    </div>
+
+    <div class="corte">
+      <div class="corte-rot">Al terminar la validación</div>
+      <p>
+        <b>Solo hay dos salidas, y las dos son buenas:</b> sigues con tu idea tal como entró, o
+        sigues con la versión que se fue ajustando en el camino. Nadie se va. Las herramientas y
+        las sesiones están para eso — probar contra gente real y corregir sobre la marcha, semana
+        a semana, no para calificarte al final. <b>Mejor ajustar en el camino que cuando ya
+        gastaste tus ahorros.</b>
+      </p>
+    </div>
+
+    <div class="fase">
+      <div class="fase-rot"><span class="fase-n">Fase 2</span> Construir · semanas 4 a 8</div>
+      <p class="fase-desc">Con la idea validada, ahora sí: producto, precio, números y la presentación para pedir lo que necesitas.</p>
+    </div>
+    <div class="semanas">
+      <div class="sem"><div class="sem-n">SEM 4</div><div class="sem-t">Qué vas a vender exactamente</div><div class="sem-e"><span>Sales con</span>Tu oferta en niveles y tu primera versión definida</div></div>
+      <div class="sem"><div class="sem-n">SEM 5</div><div class="sem-t">A cuánto lo vas a vender</div><div class="sem-e"><span>Sales con</span>Tu precio con aritmética atrás, no con corazonada</div></div>
+      <div class="sem"><div class="sem-n">SEM 6</div><div class="sem-t">Cuánto necesitas para arrancar</div><div class="sem-e"><span>Sales con</span>Tu presupuesto inicial y tu punto de equilibrio</div></div>
+      <div class="sem"><div class="sem-n">SEM 7</div><div class="sem-t">Qué tan listo estás</div><div class="sem-e"><span>Sales con</span>Tu Venture Score por dimensión y tus huecos priorizados</div></div>
+      <div class="sem"><div class="sem-n">SEM 8</div><div class="sem-t">Preséntalo</div><div class="sem-e"><span>Sales con</span>Tu presentación armada y presentada ante el grupo</div></div>
+    </div>
+
+    <div class="puerta">
+      <div class="puerta-rot">Cada semana, además</div>
+      <h3>Una hora de dudas, puerta abierta</h3>
+      <p>
+        Sin material y sin agenda: traes lo que traes atorado. Cámara opcional, asistencia
+        opcional. Entre semana, el grupo de WhatsApp.
+      </p>
+    </div>
+
+    <div class="despues">
+      <div class="despues-rot">Y después</div>
+      <h3>La segunda parte: vender y operar</h3>
+      <p>
+        Este programa termina cuando tu negocio ya <b>cuadra en papel y lo sabes
+        defender</b>. Lo que sigue —cómo consigues a tus primeros clientes, cómo montas
+        tu proceso de venta y cómo haces que opere sin ti— es un segundo programa, para
+        cuando ya estés vendiendo. <b>Una cosa a la vez.</b>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="inscribir">
+  <div class="wrap">
+    <div class="rot-sec">La inversión</div>
+    <h2>Primera generación, precio de arranque.</h2>
+
+    <div class="precio-caja">
+      <div class="precio-a">
+        <div class="cupo"><span class="punto"></span><span data-cupo="cupo">30 lugares</span>&nbsp;· primera generación</div>
+        <div class="monto">
+          <span class="mxn num">$6,999</span>
+          <span class="tachado num">$8,999</span>
+        </div>
+        <p class="monto-pie">MXN · pago único · las ocho semanas, las dos fases</p>
+        <div class="barra-cupo" aria-hidden="true"><i data-cupo="barra"></i></div>
+        <div class="cupo-pie"><span data-cupo="pie-a"></span><span data-cupo="pie-b"></span></div>
+        <div class="cierra" data-cupo="cierra">
+          <div class="cierra-n" data-cupo="dias">—</div>
+          <div class="cierra-t" data-cupo="cierra-t"></div>
+        </div>
+
+        <ul class="incluye">
+          <li><span class="tick">✓</span><span>8 sesiones de trabajo en vivo, de 2 horas</span></li>
+          <li><span class="tick">✓</span><span>8 horas de dudas, una por semana, puerta abierta</span></li>
+          <li><span class="tick">✓</span><span>Acceso completo a VentureAI Studio durante las 8 semanas</span></li>
+          <li><span class="tick">✓</span><span>Grupo de WhatsApp con acompañamiento entre sesiones</span></li>
+          <li><span class="tick">✓</span><span>Tu Venture Score y tu presentación en PowerPoint, editable</span></li>
+          <li><span class="tick">✓</span><span>Constancia de Startup México</span></li>
+        </ul>
+      </div>
+
+      <div class="precio-b">
+        <h3>Aparta tu lugar</h3>
+        <p>
+          Son 30 lugares. Déjanos tus datos y te llamamos antes de que pagues: platicamos
+          de tu idea, resolvemos tus dudas y confirmamos tu lugar.
+        </p>
+        <a class="btn" href="#">Quiero mi lugar →</a>
+        <p class="legal">
+          El precio de arranque aplica sólo a la primera generación. A partir de la
+          segunda, $8,999 MXN. Factura con CFDI 4.0 a solicitud.
+        </p>
+      </div>
+    </div>
+
+    <div class="honesto">
+      <h3>Lo que no te vamos a prometer</h3>
+      <ul>
+        <li><b>No te vamos a conseguir clientes.</b> Sales con tu negocio cuadrado y sabiéndolo defender; salir a vender es la segunda parte.</li>
+        <li><b>No te vamos a decir que tu idea está bien si no lo está.</b> Se prueba contra gente real desde la semana 1 y se ajusta en el camino, antes de construirla.</li>
+        <li><b>No te vamos a dar dinero.</b> Es lo que necesitas tener listo antes de pedírselo a alguien — o antes de poner el tuyo.</li>
+        <li><b>No son ocho semanas de teoría.</b> Cada sesión produce un documento de tu negocio. Si no lo produce, sobra.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="cierre">
+  <div class="wrap">
+    <h2>Empieza por saber si tu idea aguanta.</h2>
+    <p>
+      El diagnóstico es gratis y toma 20 minutos desde tu celular. Si lo que ves te mueve
+      el piso, hablamos del programa.
+    </p>
+    <a class="btn btn-a" href="https://ventureaistudio.lat/register" target="_blank" rel="noopener">
+      Hacer el diagnóstico gratis →
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Startup México × VentureAI Studio · Validar y construir tu negocio</span>
+    <span>© Chema Serrano. Prohibida su reproducción total o parcial.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var mxn = new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0});
+  var ent = new Intl.NumberFormat('es-MX',{maximumFractionDigits:0});
+  var $ = function(id){ return document.getElementById(id); };
+  var inv = $('inv'), precio = $('precio'), costo = $('costo');
+
+  function barra(r){
+    var pct = ((r.value - r.min) / (r.max - r.min)) * 100;
+    r.style.setProperty('--pct', pct + '%');
+  }
+  function pinta(){
+    var I = +inv.value, P = +precio.value, C = +costo.value;
+    [inv, precio, costo].forEach(barra);
+    $('v-inv').textContent = mxn.format(I);
+    $('v-precio').textContent = mxn.format(P);
+    $('v-costo').textContent = mxn.format(C);
+    var m = P - C, celda = $('c-ventas');
+    if (m <= 0) {
+      $('r-margen').textContent = mxn.format(m);
+      $('r-ventas').textContent = '∞';
+      celda.classList.add('aviso');
+      $('r-ventas').textContent = 'Nunca';
+      $('r-frase').innerHTML = '<b>A ese precio pierdes dinero en cada venta.</b> Antes de contar clientes, el precio tiene que dejar algo — eso se resuelve en la semana 5, con aritmética, no con corazonada.';
+      return;
+    }
+    celda.classList.remove('aviso');
+    var n = Math.ceil(I / m);
+    $('r-margen').textContent = mxn.format(m);
+    $('r-ventas').textContent = ent.format(n);
+    $('r-frase').innerHTML = '<b>¿Conoces a ' + ent.format(n) + ' personas que te lo compren?</b> Los dos primeros números salen de una cuenta. El tercero se contesta en la semana 3, con gente real — antes de que gastes un peso.';
+  }
+  [inv, precio, costo].forEach(function(r){ r.addEventListener('input', pinta); });
+  pinta();
+
+  // Cupo y cierre — leídos del bloque #estado. Nada se calcula a ojo.
+  try {
+    var E = JSON.parse(document.getElementById('estado').textContent);
+    var quedan = Math.max(0, Math.min(E.visibles, E.total - E.inscritos));
+    var q = document.querySelectorAll('[data-cupo]'), el = {};
+    q.forEach(function(n){ el[n.getAttribute('data-cupo')] = n; });
+    var txtQ = quedan === 1 ? 'Queda 1 lugar' : 'Quedan ' + quedan + ' lugares';
+    el['etiqueta'].textContent = quedan > 0 ? txtQ.toLowerCase().replace(/^q/, 'Q') : 'Cupo lleno';
+    el['cupo'].innerHTML = quedan > 0
+      ? '<span class="cupo-num">' + txtQ + '</span> de ' + E.total
+      : '<span class="cupo-num">Cupo lleno</span> · lista de espera';
+    el['cta'].textContent = quedan > 0 ? 'Apartar mi lugar · quedan ' + quedan : 'Lista de espera';
+    var ocupados = E.total - quedan;
+    el['pie-a'].innerHTML = '<b>' + ocupados + ' apartados</b>';
+    el['pie-b'].innerHTML = '<b>' + quedan + ' disponibles</b>';
+    requestAnimationFrame(function(){ el['barra'].style.width = Math.round(ocupados / E.total * 100) + '%'; });
+
+    var fecha = function(iso){ return new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'long' }).format(new Date(iso + 'T12:00:00-06:00')); };
+    var cierre = new Date(E.cierre + 'T23:59:59-06:00');
+    var dias = Math.ceil((cierre - new Date()) / 86400000);
+    el['arranque'].textContent = fecha(E.arranque);
+    if (dias > 0) {
+      el['dias'].textContent = dias;
+      el['cierra-t'].innerHTML = '<b>' + (dias === 1 ? 'día para que cierre el registro' : 'días para que cierre el registro') + '</b>Cierra el ' + fecha(E.cierre) + '. La primera generación arranca el ' + fecha(E.arranque) + '.';
+    } else {
+      el['cierra'].classList.add('cerrado');
+      el['dias'].textContent = '0';
+      el['cierra-t'].innerHTML = '<b>Registro cerrado</b>Cerró el ' + fecha(E.cierre) + '. Déjanos tus datos para la segunda generación.';
+      el['cta'].textContent = 'Segunda generación';
+    }
+  } catch (e) {}
+
+  // Malla de hoja de cálculo que respira — del mundo del negocio, no adorno.
+  var c = document.getElementById('malla');
+  if (c && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var ctx = c.getContext('2d'), t = 0, caja;
+    function dim(){
+      var r = c.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+      c.width = r.width * d; c.height = r.height * d; ctx.setTransform(d,0,0,d,0,0);
+      return r;
+    }
+    caja = dim();
+    window.addEventListener('resize', function(){ caja = dim(); });
+
+    function dibuja(){
+      t += 0.005;
+      ctx.clearRect(0,0,caja.width,caja.height);
+      var paso = 52;
+      for (var x = 0; x < caja.width + paso; x += paso){
+        var o = Math.sin(t + x * 0.007) * 4;
+        var cerca = 1 - Math.min(Math.abs(x - caja.width * 0.22) / (caja.width * 0.6), 1);
+        ctx.strokeStyle = 'rgba(255,132,77,' + (0.05 + cerca * 0.10) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x + o, 0); ctx.lineTo(x + o, caja.height); ctx.stroke();
+      }
+      for (var y = 0; y < caja.height + paso; y += paso){
+        var o2 = Math.cos(t + y * 0.009) * 4;
+        ctx.strokeStyle = 'rgba(255,255,255,0.045)';
+        ctx.beginPath(); ctx.moveTo(0, y + o2); ctx.lineTo(caja.width, y + o2); ctx.stroke();
+      }
+      requestAnimationFrame(dibuja);
+    }
+    dibuja();
+  }
+})();
+</script>
