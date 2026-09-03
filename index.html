@@ -768,7 +768,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   } catch (e) {}
 
   // Chat de la landing — vive en un Cloudflare Worker. Si no responde, el botón ni aparece.
-  var CHAT_URL = 'PENDIENTE_URL_DEL_WORKER';
+  var CHAT_URL = 'https://idea-chat.ventureai.workers.dev';
   (function(){
     if (!/^https:\/\//.test(CHAT_URL)) return;
     var btn = document.getElementById('chat-btn'), caja = document.getElementById('chat'),
