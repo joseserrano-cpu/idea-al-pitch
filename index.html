@@ -257,6 +257,24 @@ h2{font-size:clamp(30px,4.2vw,46px);max-width:19ch}
 .precio-b .btn{background:#151517;color:var(--blanco);width:100%;justify-content:center;box-shadow:0 10px 28px -12px rgba(0,0,0,.7)}
 .precio-b .btn:hover{transform:translateY(-2px)}
 .legal{margin-top:18px;font-size:12.5px;line-height:1.55;color:rgba(21,21,23,.66)}
+/* opciones de pago */
+.pago-main{display:flex;flex-direction:column;gap:4px}
+.pago-main .btn{font-size:17px;padding:17px 28px}
+.pago-nota{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(21,21,23,.62);margin:0 0 8px}
+.pago-sep{display:flex;align-items:center;gap:12px;margin:16px 0 10px;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(21,21,23,.62)}
+.pago-sep::before,.pago-sep::after{content:"";flex:1;height:1px;background:rgba(21,21,23,.22)}
+.pago-alt{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-alt{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:13px 12px;border-radius:8px;text-decoration:none;
+  border:2px solid rgba(21,21,23,.85);color:#151517;background:rgba(255,255,255,.14);
+  transition:transform .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.btn-alt:hover{transform:translateY(-2px);background:#151517;color:var(--blanco);box-shadow:0 10px 28px -12px rgba(0,0,0,.7)}
+.btn-alt:focus-visible{outline:3px solid var(--amarillo);outline-offset:3px}
+.btn-alt b{font-family:var(--texto);font-weight:700;font-size:15.5px}
+.btn-alt span{font-size:12.5px;font-weight:400;opacity:.8}
+@media (max-width:420px){.pago-alt{grid-template-columns:1fr}}
 /* cupo y cierre */
 .cupo-num{color:var(--blanco)}
 .barra-cupo{margin-top:16px;height:6px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden}
@@ -647,11 +665,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
           plataforma y el equipo te escribe por WhatsApp. Si prefieres platicar antes,
           escríbenos en el chat y te llamamos.
         </p>
-        <a class="btn" href="https://buy.stripe.com/aFa5kC8bYg1Lb8peij6EU00" target="_blank" rel="noopener">Quiero mi lugar · pagar $6,999 →</a>
+        <div class="pago-main">
+          <p class="pago-nota">Pago único</p>
+          <a class="btn" href="https://buy.stripe.com/aFa5kC8bYg1Lb8peij6EU00" target="_blank" rel="noopener">Quiero mi lugar · $6,999 →</a>
+        </div>
+        <div class="pago-sep">o difiérelo</div>
+        <div class="pago-alt">
+          <a class="btn-alt" href="https://buy.stripe.com/eVqeVceAm02N2BTa236EU01" target="_blank" rel="noopener"><b>A 3 meses</b><span>$7,369 en total</span></a>
+          <a class="btn-alt" href="https://buy.stripe.com/aFa14mgIu02N4K15LN6EU02" target="_blank" rel="noopener"><b>A 6 meses</b><span>$7,569 en total</span></a>
+        </div>
         <p class="legal" style="margin-top:14px">
-          ¿Prefieres diferirlo? <a href="https://buy.stripe.com/eVqeVceAm02N2BTa236EU01" target="_blank" rel="noopener" style="color:#151517;font-weight:700">A 3 meses · $7,369</a>
-          &nbsp;·&nbsp; <a href="https://buy.stripe.com/aFa14mgIu02N4K15LN6EU02" target="_blank" rel="noopener" style="color:#151517;font-weight:700">A 6 meses · $7,569</a><br>
-          A meses con tarjeta de crédito mexicana participante. También puedes pagar en OXXO desde la liga de pago único.
+          A meses con tarjeta de crédito mexicana participante. En OXXO puedes pagar desde la liga de pago único.
         </p>
         <p class="legal">
           El precio de arranque aplica sólo a la primera generación. A partir de la
