@@ -4,9 +4,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Public+Sans:wght@300;400;500;700&display=swap">
 
 <!-- ESTADO DEL REGISTRO — única fuente. Para actualizar: cambiar "inscritos" y republicar.
-     Regla: lugares visibles = mín(visibles, total − inscritos). Con 30 de cupo real y 20 visibles,
-     los primeros 10 inscritos no mueven el número; a partir del 11 baja de verdad. -->
-<script id="estado" type="application/json">{"total":30,"visibles":20,"inscritos":0,"cierre":"2026-09-30","arranque":"2026-10-01"}</script>
+     "contador": false → la página dice "Grupo de máximo 30" y solo corre el reloj de cierre (nada de vendidos).
+     "contador": true  → muestra "Quedan N lugares" con N = total − inscritos, cifra real. Prenderlo cuando haya tracción. -->
+<script id="estado" type="application/json">{"total":30,"contador":false,"inscritos":0,"cierre":"2026-09-30","arranque":"2026-10-01"}</script>
 
 <style>
 /* ══════════════════════════════════════════════════════════════
@@ -426,7 +426,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 <div class="hero">
   <canvas id="malla" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="etiqueta">8 semanas · arranca el <span data-cupo="arranque">1 de octubre</span> · <span data-cupo="etiqueta">Cupo 30</span></div>
+    <div class="etiqueta">8 semanas · arranca el <span data-cupo="arranque">1 de octubre</span> · <span data-cupo="etiqueta">Grupo de máximo 30</span></div>
     <h1>Todos te dicen que tu idea <span class="quema">está buenísima.</span></h1>
     <p class="bajada">
       Ninguno te la va a comprar. Ocho semanas para averiguar si tu negocio se sostiene
@@ -635,7 +635,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 
     <div class="precio-caja">
       <div class="precio-a">
-        <div class="cupo"><span class="punto"></span><span data-cupo="cupo">30 lugares</span>&nbsp;· primera generación</div>
+        <div class="cupo"><span class="punto"></span><span data-cupo="cupo">Grupo de máximo 30</span>&nbsp;· primera generación</div>
         <div class="monto">
           <span class="mxn num">$6,999</span>
           <span class="tachado num">$8,999</span>
@@ -768,19 +768,32 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   // Cupo y cierre — leídos del bloque #estado. Nada se calcula a ojo.
   try {
     var E = JSON.parse(document.getElementById('estado').textContent);
-    var quedan = Math.max(0, Math.min(E.visibles, E.total - E.inscritos));
+    var quedan = Math.max(0, E.total - E.inscritos);
     var q = document.querySelectorAll('[data-cupo]'), el = {};
     q.forEach(function(n){ el[n.getAttribute('data-cupo')] = n; });
-    var txtQ = quedan === 1 ? 'Queda 1 lugar' : 'Quedan ' + quedan + ' lugares';
-    el['etiqueta'].textContent = quedan > 0 ? txtQ.toLowerCase().replace(/^q/, 'Q') : 'Cupo lleno';
-    el['cupo'].innerHTML = quedan > 0
-      ? '<span class="cupo-num">' + txtQ + '</span> de ' + E.total
-      : '<span class="cupo-num">Cupo lleno</span> · lista de espera';
-    el['cta'].textContent = quedan > 0 ? 'Apartar mi lugar · quedan ' + quedan : 'Lista de espera';
-    var ocupados = E.total - quedan;
-    el['pie-a'].innerHTML = '<b>' + ocupados + ' apartados</b>';
-    el['pie-b'].innerHTML = '<b>' + quedan + ' disponibles</b>';
-    requestAnimationFrame(function(){ el['barra'].style.width = Math.round(ocupados / E.total * 100) + '%'; });
+    var fechaCorta = function(iso){ return new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'short' }).format(new Date(iso + 'T12:00:00-06:00')).replace('.', ''); };
+    if (E.contador && quedan > 0) {
+      var txtQ = quedan === 1 ? 'Queda 1 lugar' : 'Quedan ' + quedan + ' lugares';
+      el['etiqueta'].textContent = txtQ;
+      el['cupo'].innerHTML = '<span class="cupo-num">' + txtQ + '</span> de ' + E.total;
+      el['cta'].textContent = 'Apartar mi lugar · quedan ' + quedan;
+      var ocupados = E.total - quedan;
+      el['pie-a'].innerHTML = '<b>' + ocupados + ' inscritos</b>';
+      el['pie-b'].innerHTML = '<b>' + quedan + ' disponibles</b>';
+      requestAnimationFrame(function(){ el['barra'].style.width = Math.round(ocupados / E.total * 100) + '%'; });
+    } else if (quedan > 0) {
+      el['etiqueta'].textContent = 'Grupo de máximo ' + E.total;
+      el['cupo'].innerHTML = '<span class="cupo-num">Grupo de máximo ' + E.total + '</span>';
+      el['cta'].textContent = 'Apartar mi lugar · cierra ' + fechaCorta(E.cierre);
+      el['barra'].parentNode.style.display = 'none';
+      el['pie-a'].parentNode.style.display = 'none';
+    } else {
+      el['etiqueta'].textContent = 'Cupo lleno';
+      el['cupo'].innerHTML = '<span class="cupo-num">Cupo lleno</span> · lista de espera';
+      el['cta'].textContent = 'Lista de espera';
+      el['barra'].parentNode.style.display = 'none';
+      el['pie-a'].parentNode.style.display = 'none';
+    }
 
     var fecha = function(iso){ return new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'long' }).format(new Date(iso + 'T12:00:00-06:00')); };
     var cierre = new Date(E.cierre + 'T23:59:59-06:00');
