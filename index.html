@@ -948,7 +948,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     // ?de=instagram|facebook: viene de una invitación directa del equipo; el chat abre solo y el lead queda marcado
     var fuente = null;
     try { var m = location.search.match(/[?&]de=([a-z0-9_-]{2,32})/i); if (m) { fuente = m[1].toLowerCase(); localStorage.setItem('idea-chat-fuente', fuente); } else { fuente = localStorage.getItem('idea-chat-fuente'); } } catch (e) {}
-    var nombresFuente = { instagram: 'Instagram', facebook: 'Facebook', whatsapp: 'WhatsApp' };
+    var nombresFuente = { instagram: 'Instagram', facebook: 'Facebook', whatsapp: 'WhatsApp', inbox: 'Instagram o Facebook', anuncio: 'un anuncio' };
     function pinta(rol, texto){
       var d = document.createElement('div'); d.className = 'm ' + rol;
       var html = texto.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; })
