@@ -32,6 +32,9 @@
 <script id="estado" type="application/json">{"total":30,"contador":false,"inscritos":0,"cierre":"2026-09-30","arranque":"2026-10-01"}</script>
 
 <style>
+.precio-a .sube{display:flex;flex-direction:column;line-height:1.15;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--plateado);opacity:.75}
+.precio-a .sube b{font-size:23px;font-weight:600;letter-spacing:-.02em;text-transform:none;color:var(--plateado);opacity:.9}
+
 .precio-b .nota-diferido{font-size:12.5px;line-height:1.4;margin:10px 0 0;opacity:.62;text-align:center}
 
 /* ══════════════════════════════════════════════════════════════
@@ -727,7 +730,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
         <div class="cupo"><span class="punto"></span><span data-cupo="cupo">Grupo de máximo 30</span>&nbsp;· primera generación</div>
         <div class="monto">
           <span class="mxn num">$6,999</span>
-          <span class="tachado num">$8,999</span>
+          <span class="sube"><b class="num">$8,999</b>la generación 2</span>
         </div>
         <p class="monto-pie">MXN · pago único · las ocho semanas, las dos fases</p>
         <div class="barra-cupo" aria-hidden="true"><i data-cupo="barra"></i></div>
@@ -768,8 +771,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
           A meses con tarjeta de crédito mexicana participante. En OXXO puedes pagar desde la liga de pago único.
         </p>
         <p class="legal">
-          El precio de arranque aplica sólo a la primera generación. A partir de la
-          segunda, $8,999 MXN. Factura con CFDI 4.0 a solicitud.
+          Estos 30 lugares son los únicos a $6,999: la generación 2 arranca en $8,999. Factura con CFDI 4.0 a solicitud.
         </p>
       </div>
     </div>
