@@ -945,13 +945,25 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
         inp = document.getElementById('chat-in'), send = document.getElementById('chat-send');
     var session = null;
     try { session = localStorage.getItem('idea-chat-session'); } catch (e) {}
+    // ?de=instagram|facebook: viene de una invitación directa del equipo; el chat abre solo y el lead queda marcado
+    var fuente = null;
+    try { var m = location.search.match(/[?&]de=([a-z0-9_-]{2,32})/i); if (m) { fuente = m[1].toLowerCase(); localStorage.setItem('idea-chat-fuente', fuente); } else { fuente = localStorage.getItem('idea-chat-fuente'); } } catch (e) {}
+    var nombresFuente = { instagram: 'Instagram', facebook: 'Facebook', whatsapp: 'WhatsApp' };
     function pinta(rol, texto){
       var d = document.createElement('div'); d.className = 'm ' + rol;
       var html = texto.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; })
                       .replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
       d.innerHTML = html; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d;
     }
-    fetch(CHAT_URL + '/health').then(function(r){ if (r.ok) btn.style.display = 'inline-flex'; }).catch(function(){});
+    fetch(CHAT_URL + '/health').then(function(r){
+      if (!r.ok) return;
+      btn.style.display = 'inline-flex';
+      if (fuente && /[?&]de=/.test(location.search) && !msgs.children.length) {
+        caja.classList.add('abierto');
+        pinta('bot', 'Hola. Nos escribiste por ' + (nombresFuente[fuente] || fuente) + ' y por eso te invitamos a De la Idea al Pitch: 8 semanas para saber si tu idea aguanta antes de meterle tus ahorros. Arranca el 1 de octubre.\n\nSi quieres que alguien del equipo de Startup México te llame, pásame tu nombre y tu WhatsApp aquí mismo. Si prefieres, pregúntame lo que quieras del programa.');
+        inp.focus();
+      }
+    }).catch(function(){});
     btn.addEventListener('click', function(){
       caja.classList.toggle('abierto');
       if (caja.classList.contains('abierto') && !msgs.children.length) {
@@ -966,7 +978,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       pinta('yo', t); inp.value = ''; send.disabled = true;
       var espera = pinta('bot', '…');
       fetch(CHAT_URL + '/chat', { method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ session: session, message: t }) })
+        body: JSON.stringify({ session: session, message: t, fuente: fuente || undefined }) })
       .then(function(r){ return r.json(); })
       .then(function(j){
         if (j.session) { session = j.session; try { localStorage.setItem('idea-chat-session', session); } catch (e) {} }
