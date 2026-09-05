@@ -77,6 +77,32 @@ a{color:inherit}
 .hero{position:relative;padding:70px 0 30px;overflow:hidden}
 #malla{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.62}
 .hero .wrap{position:relative;z-index:1}
+/* Imágenes generadas (Higgsfield, 4-sep) — capa visual, nunca compiten con el texto */
+.hero-cinta{position:absolute;right:-6%;top:-4%;width:64%;max-width:980px;pointer-events:none;z-index:0;opacity:.92;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 28%,#000 100%),linear-gradient(180deg,#000 55%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0%,#000 28%,#000 100%);
+  animation:cinta-flota 14s ease-in-out infinite alternate;filter:saturate(1.05)}
+@keyframes cinta-flota{from{transform:translate3d(0,0,0) rotate(-1deg)}to{transform:translate3d(-2%,2.5%,0) rotate(1deg)}}
+.hero-cinta img{width:100%;height:auto;display:block}
+.dupla{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:36px}
+.dupla .sub{margin-top:0}
+.figura{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--borde);background:var(--sup);
+  box-shadow:0 30px 80px -40px rgba(255,132,77,.55);transform:perspective(1200px) rotateY(-4deg);transition:transform .6s ease}
+.figura:hover{transform:perspective(1200px) rotateY(0deg)}
+.figura img{width:100%;height:auto;display:block}
+.figura figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;font-size:12.5px;color:var(--plateado);
+  background:linear-gradient(180deg,transparent,rgba(21,21,23,.92));letter-spacing:.02em}
+.figura figcaption b{color:var(--amarillo);font-weight:700}
+.cierre{position:relative;overflow:hidden}
+.cierre-fondo{position:absolute;inset:0;z-index:0;pointer-events:none}
+.cierre-fondo img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.55;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 80%,transparent 100%)}
+.cierre .wrap{position:relative;z-index:1}
+@media (max-width:860px){
+  .hero-cinta{width:120%;right:-30%;top:auto;bottom:-6%;opacity:.55}
+  .dupla{grid-template-columns:1fr;gap:26px}
+  .figura{transform:none}
+}
 .etiqueta{
   display:block;max-width:60ch;line-height:1.9;
   font-family:var(--texto);font-size:11.5px;font-weight:700;
@@ -439,6 +465,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 
 <div class="hero">
   <canvas id="malla" aria-hidden="true"></canvas>
+  <div class="hero-cinta" aria-hidden="true"><img src="img/hero-cinta.webp" alt="" fetchpriority="low" decoding="async"></div>
   <div class="wrap">
     <div class="etiqueta">8 semanas · arranca el <span data-cupo="arranque">1 de octubre</span> · <span data-cupo="etiqueta">Grupo de máximo 30</span></div>
     <h1>Todos te dicen que tu idea <span class="quema">está buenísima.</span></h1>
@@ -545,11 +572,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="wrap">
     <div class="rot-sec">Método + herramienta</div>
     <h2>No es un curso con IA. Es un método, y una plataforma que lo ejecuta contigo.</h2>
-    <p class="sub">
+    <div class="dupla"><p class="sub">
       El método es de Chema Serrano y lo avala Startup México; las sesiones en vivo las da
       el equipo de SUM. VentureAI Studio pone la plataforma: ejercicios de IA en español que producen documentos de <b style="color:var(--blanco);font-weight:700">tu</b> negocio,
       no de un ejemplo. Una sin la otra no sirve.
     </p>
+      <figure class="figura">
+        <img src="img/metodo-herramienta.webp" alt="Escalera de bloques negros con un cristal naranja que completa el último escalón" loading="lazy" decoding="async">
+        <figcaption><b>El método es la escalera.</b> La herramienta es la pieza que la completa. Una sin la otra no sirve.</figcaption>
+      </figure>
+    </div>
 
     <div class="suma">
       <div>
@@ -586,11 +618,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="wrap">
     <div class="rot-sec">El programa</div>
     <h2>Tres semanas para poner a prueba tu idea. Cinco para construirla.</h2>
-    <p class="sub">
+    <div class="dupla"><p class="sub">
       Cada semana: una sesión de trabajo de dos horas y una hora de dudas de puerta
       abierta. Trabajas tu propio negocio en la plataforma entre sesión y sesión; la
       sesión es para atorones y decisiones, no para tomar apuntes.
     </p>
+      <figure class="figura">
+        <img src="img/idea-al-agua.webp" alt="Barco de papel hecho de apuntes flotando sobre agua oscura" loading="lazy" decoding="async">
+        <figcaption><b>Tu idea, hecha de apuntes,</b> puesta al agua antes de invertir. Para eso son las tres primeras semanas.</figcaption>
+      </figure>
+    </div>
 
     <div class="fase">
       <div class="fase-rot"><span class="fase-n">Fase 1</span> Validar · semanas 1 a 3</div>
@@ -749,6 +786,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 </section>
 
 <div class="cierre">
+  <div class="cierre-fondo" aria-hidden="true"><img src="img/cierre-puerta.webp" alt="" loading="lazy" decoding="async"></div>
   <div class="wrap">
     <h2>Empieza por saber si tu idea aguanta.</h2>
     <p>
