@@ -56,8 +56,8 @@ a{color:inherit}
   border-bottom:1px solid var(--borde);
 }
 .barra .wrap{display:flex;align-items:center;gap:18px;height:72px}
-/* Logotipo_SUM_Blanco_02.png del kit oficial — versión NEGATIVO, la autorizada
-   para fondo oscuro. 36px de alto, por encima del mínimo de 30px del manual. */
+/* Logotipo completo "Startup México" (Logotipo_SUM_Color_01 pasado a blanco: versión
+   negativo para fondo oscuro). Chema, 4-sep: el isotipo "Sum" no lo reconoce quien no conoce SUM. */
 .logo-sum{height:26px;width:auto;display:block}
 .alianza{
   display:flex;align-items:center;gap:14px;
@@ -412,7 +412,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   .sem{grid-template-columns:56px 1fr;gap:16px}
   .sem-e{grid-column:2}
   section{padding:60px 0}
-  .alianza .vas{display:none}
+  .alianza .vas,.alianza .x,.cta-fecha{display:none}
+  .cta-mini{font-size:13.5px;padding:10px 14px;white-space:nowrap}
   .calc-lab{flex-direction:column;align-items:flex-start;gap:6px}
   .calc-lab strong{font-size:34px}
   .calc-ctrl{grid-template-columns:1fr;gap:22px}
@@ -827,7 +828,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       var txtQ = quedan === 1 ? 'Queda 1 lugar' : 'Quedan ' + quedan + ' lugares';
       el['etiqueta'].textContent = txtQ;
       el['cupo'].innerHTML = '<span class="cupo-num">' + txtQ + '</span> de ' + E.total;
-      el['cta'].textContent = 'Apartar mi lugar · quedan ' + quedan;
+      el['cta'].innerHTML = 'Apartar mi lugar<span class="cta-fecha"> · quedan ' + quedan + '</span>';
       var ocupados = E.total - quedan;
       el['pie-a'].innerHTML = '<b>' + ocupados + ' inscritos</b>';
       el['pie-b'].innerHTML = '<b>' + quedan + ' disponibles</b>';
@@ -835,7 +836,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     } else if (quedan > 0) {
       el['etiqueta'].textContent = 'Grupo de máximo ' + E.total;
       el['cupo'].innerHTML = '<span class="cupo-num">Grupo de máximo ' + E.total + '</span>';
-      el['cta'].textContent = 'Apartar mi lugar · cierra ' + fechaCorta(E.cierre);
+      el['cta'].innerHTML = 'Apartar mi lugar<span class="cta-fecha"> · cierra ' + fechaCorta(E.cierre) + '</span>';
       el['barra'].parentNode.style.display = 'none';
       el['pie-a'].parentNode.style.display = 'none';
     } else {
