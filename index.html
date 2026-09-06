@@ -940,10 +940,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     }
 
     var fecha = function(iso){ return new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'long' }).format(new Date(iso + 'T12:00:00-06:00')); };
-    var cierre = new Date(E.cierre + 'T23:59:59-06:00');
-    var dias = Math.ceil((cierre - new Date()) / 86400000);
+    // Días de CALENDARIO en hora de México (regla: un número, una fuente).
+    // Ambos extremos anclados a mediodía UTC, así la resta da días enteros exactos
+    // sin importar el huso ni el horario de verano de quien abre la página.
+    var hoyMx = new Date(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Mexico_City',
+      year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()) + 'T12:00:00Z');
+    var dias = Math.round((new Date(E.cierre + 'T12:00:00Z') - hoyMx) / 86400000);
     el['arranque'].textContent = fecha(E.arranque);
-    if (dias > 0) {
+    if (dias === 0) {
+      // El último día el registro SIGUE abierto hasta las 23:59 de México.
+      el['dias'].textContent = 'HOY';
+      el['cierra-t'].innerHTML = '<b>es el último día para registrarte</b>Cierra hoy ' + fecha(E.cierre) + ' a las 11:59 de la noche. Bienvenida y entrega de accesos el ' + fecha(E.arranque) + '; la primera sesión de trabajo, el martes 6 de octubre de 6 a 8 pm.';
+    } else if (dias > 0) {
       el['dias'].textContent = dias;
       el['cierra-t'].innerHTML = '<b>' + (dias === 1 ? 'día para que cierre el registro' : 'días para que cierre el registro') + '</b>Cierra el ' + fecha(E.cierre) + '. Bienvenida y entrega de accesos el ' + fecha(E.arranque) + '; la primera sesión de trabajo, el martes 6 de octubre de 6 a 8 pm.';
     } else {
