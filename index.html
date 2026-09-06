@@ -22,6 +22,14 @@
 <meta name="twitter:description" content="Ocho semanas para averiguar si tu negocio se sostiene antes de meterle tus ahorros. Arranca el 1 de octubre · grupo de máximo 30.">
 <meta name="twitter:image" content="https://idea.ventureaistudio.lat/img/og-idea-al-pitch.jpg">
 <title>De la Idea al Pitch</title>
+<!-- Medición: píxel de Meta (2000561403965885) + eventos propios. Cloudflare Web Analytics va al final del body. -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2000561403965885');fbq('track','PageView');
+// evento(nombre, datos, esEstandar): un solo punto para medir; si el píxel no cargó, no rompe nada.
+window.evento=function(n,d,e){try{if(window.fbq){e?fbq('track',n,d||{}):fbq('trackCustom',n,d||{});}}catch(x){}};
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2000561403965885&ev=PageView&noscript=1"></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Public+Sans:wght@300;400;500;700&display=swap">
@@ -763,8 +771,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
         </div>
         <div class="pago-sep">o difiérelo</div>
         <div class="pago-alt">
-          <a class="btn-alt" href="https://buy.stripe.com/eVqeVceAm02N2BTa236EU01" target="_blank" rel="noopener"><b>3 pagos de $2,456.33</b><span>con tarjeta de crédito · total $7,369</span></a>
-          <a class="btn-alt" href="https://buy.stripe.com/aFa14mgIu02N4K15LN6EU02" target="_blank" rel="noopener"><b>6 pagos de $1,261.50</b><span>con tarjeta de crédito · total $7,569</span></a>
+          <a class="btn-alt" href="https://buy.stripe.com/eVqeVceAm02N2BTa236EU01" target="_blank" rel="noopener"><b>3 pagos de $2,456</b><span>con tarjeta de crédito</span></a>
+          <a class="btn-alt" href="https://buy.stripe.com/aFa14mgIu02N4K15LN6EU02" target="_blank" rel="noopener"><b>6 pagos de $1,262</b><span>con tarjeta de crédito</span></a>
         </div>
         <p class="nota-diferido">De contado son $6,999.</p>
         <p class="legal" style="margin-top:14px">
@@ -891,6 +899,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   [inv, precio, costo].forEach(function(r){ r.addEventListener('input', pinta); });
   pinta();
 
+  // Medición de clics: pagar (InitiateCheckout con el plan) y diagnóstico gratis.
+  document.querySelectorAll('a[href^="https://buy.stripe.com/"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var plan = /EU01/.test(a.href) ? '3 pagos' : /EU02/.test(a.href) ? '6 pagos' : 'pago único';
+      window.evento('InitiateCheckout', { content_name: 'Idea al Pitch · ' + plan, value: 6999, currency: 'MXN' }, true);
+    });
+  });
+  document.querySelectorAll('a[href*="ventureaistudio.lat/register"]').forEach(function(a){
+    a.addEventListener('click', function(){ window.evento('ClicDiagnostico', {}); });
+  });
+
   // Cupo y cierre — leídos del bloque #estado. Nada se calcula a ojo.
   try {
     var E = JSON.parse(document.getElementById('estado').textContent);
@@ -960,6 +979,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       btn.style.display = 'inline-flex';
       if (fuente && /[?&]de=/.test(location.search) && !msgs.children.length) {
         caja.classList.add('abierto');
+        window.evento('AbrioChat', { fuente: fuente });
         pinta('bot', 'Hola. Nos escribiste por ' + (nombresFuente[fuente] || fuente) + ' y por eso te invitamos a De la Idea al Pitch: 8 semanas para saber si tu idea aguanta antes de meterle tus ahorros. Arranca el 1 de octubre.\n\nSi quieres que alguien del equipo de Startup México te llame, pásame tu nombre y tu WhatsApp aquí mismo. Si prefieres, pregúntame lo que quieras del programa.');
         inp.focus();
       }
@@ -967,6 +987,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     btn.addEventListener('click', function(){
       caja.classList.toggle('abierto');
       if (caja.classList.contains('abierto') && !msgs.children.length) {
+        window.evento('AbrioChat', { fuente: fuente || 'directo' });
         pinta('bot', 'Hola. Soy el asistente del programa. ¿Qué quieres saber: cómo funciona, fechas, precio, o si es para tu idea?');
         inp.focus();
       }
@@ -982,6 +1003,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
       .then(function(r){ return r.json(); })
       .then(function(j){
         if (j.session) { session = j.session; try { localStorage.setItem('idea-chat-session', session); } catch (e) {} }
+        if (j.lead && j.lead.ok) { window.evento('Lead', { content_name: 'Idea al Pitch · chat', fuente: fuente || 'directo' }, true); }
         espera.remove(); pinta('bot', j.reply || 'Se me fue la señal. ¿Me lo repites?');
       })
       .catch(function(){ espera.remove(); pinta('bot', 'Se me fue la señal. Escríbenos por WhatsApp o entra a https://ventureaistudio.lat/register'); })
